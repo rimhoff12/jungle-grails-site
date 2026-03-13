@@ -1,30 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Upcoming Shows | Jungle Grails</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Events | Jungle Grails</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <div class="bg-jungle">
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+  </div>
 
-<header>
-  <h1>Jungle Grails</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="events.html">Events</a>
-    <a href="database.html">Database</a>
-    <a href="submit.html">Submit</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">Jungle Grails</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="database.html">Database</a>
+        <a href="submit.html">Submit</a>
+      </nav>
+    </div>
+  </header>
 
-<h2>Upcoming Shows</h2>
+  <main class="container section">
+    <p class="eyebrow">Where to find Jungle Grails</p>
+    <h1 style="font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 16px;">Upcoming Shows</h1>
+    <p class="hero-text">
+      Follow Jungle Grails at upcoming card shows, conventions, and collector events across the region.
+    </p>
 
-<p>Find Jungle Grails at these upcoming events.</p>
+    <section class="section">
+      <div class="card-grid three">
+        <article class="card">
+          <h3>Cincinnati Card Show</h3>
+          <p><strong>Date:</strong> Placeholder</p>
+          <p><strong>Location:</strong> Cincinnati, OH</p>
+          <p><strong>Notes:</strong> Confirmed appearance placeholder.</p>
+        </article>
 
-<ul>
-  <li>Sample Card Show – Cincinnati, OH – April 12</li>
-  <li>Queen City Collectibles Expo – Mason, OH – April 20</li>
-</ul>
+        <article class="card">
+          <h3>Queen City Collectibles Expo</h3>
+          <p><strong>Date:</strong> Placeholder</p>
+          <p><strong>Location:</strong> Mason, OH</p>
+          <p><strong>Notes:</strong> Tentative event placeholder.</p>
+        </article>
 
+        <article class="card">
+          <h3>Midwest Card Convention</h3>
+          <p><strong>Date:</strong> Placeholder</p>
+          <p><strong>Location:</strong> Placeholder</p>
+          <p><strong>Notes:</strong> Add your next scheduled show here.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-panel">
+        <h2>Check Back for New Show Dates</h2>
+        <p>
+          This page will become your live event schedule as you add confirmed appearances.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="database.html">Browse Local Database</a>
+          <a class="btn btn-secondary" href="submit.html">Submit a Show</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Jungle Grails</strong>
+        <p>Enter the Jungle. Find Your Grail.</p>
+      </div>
+      <div>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">X</a>
+        <a href="#">eBay</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

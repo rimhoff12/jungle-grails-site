@@ -6,61 +6,107 @@
   <title>Local Card Show Database | Jungle Grails</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
+  <div class="bg-jungle">
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+    <div class="sparkle sparkle-1"></div>
+    <div class="sparkle sparkle-2"></div>
+    <div class="sparkle sparkle-3"></div>
+  </div>
+
   <header class="site-header">
     <div class="container nav">
       <div class="logo">Jungle Grails</div>
       <nav>
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
-        <a href="database.html">Database</a>
+        <a href="database.html" class="active">Database</a>
         <a href="submit.html">Submit</a>
       </nav>
     </div>
   </header>
 
   <main class="container section">
-    <h1 style="font-size:3.5rem;">Local Card Show Database</h1>
-    <p class="hero-text">Browse regional card shows and help improve the list.</p>
+    <p class="eyebrow">Regional hobby resource</p>
+    <h1 class="page-title">Local Card Show Database</h1>
+    <p class="page-intro">
+      Browse regional card shows and help improve the list for collectors and vendors.
+    </p>
 
-    <div class="card" style="margin-bottom:18px;">
-      <div class="form-grid">
-        <input id="searchInput" type="text" placeholder="Search by show name, city, state, promoter..." />
+    <section class="section">
+      <div class="card">
+        <div class="form-grid">
+          <div>
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="text" placeholder="Search by show name, city, state, promoter..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="table-wrap">
+        <table id="eventsTable">
+          <thead>
+            <tr>
+              <th>Show Name</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Next Show</th>
+              <th>Promoter</th>
+              <th>Tables</th>
+              <th>Map</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sample Card Show</td>
+              <td>Cincinnati</td>
+              <td>OH</td>
+              <td>2026-04-12</td>
+              <td>Sample Promoter</td>
+              <td>75</td>
+              <td><a href="#">Map</a></td>
+              <td><a href="#">Source</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-panel">
+        <h2 class="section-title">📝 Help Improve the List</h2>
+        <p class="page-intro">
+          Found a missing show or an incorrect detail? Submit an addition or correction for review.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="submit.html">Submit an Update</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Jungle Grails</strong>
+        <p>Enter the Jungle. Find Your Grail.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">X</a>
+        <a href="#">eBay</a>
       </div>
     </div>
-
-    <div class="table-wrap">
-      <table id="eventsTable">
-        <thead>
-          <tr>
-            <th>Show Name</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Next Show</th>
-            <th>Promoter</th>
-            <th>Tables</th>
-            <th>Map</th>
-            <th>Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Sample Card Show</td>
-            <td>Cincinnati</td>
-            <td>OH</td>
-            <td>2026-04-12</td>
-            <td>Sample Promoter</td>
-            <td>75</td>
-            <td><a href="#">Map</a></td>
-            <td><a href="#">Source</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+  </footer>
 
   <script>
     const searchInput = document.getElementById("searchInput");

@@ -6,21 +6,24 @@
   <title>Jungle Grails</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <div class="bg-jungle">
     <div class="leaf leaf-1"></div>
     <div class="leaf leaf-2"></div>
     <div class="leaf leaf-3"></div>
+    <div class="sparkle sparkle-1"></div>
+    <div class="sparkle sparkle-2"></div>
+    <div class="sparkle sparkle-3"></div>
   </div>
 
   <header class="site-header">
     <div class="container nav">
       <div class="logo">Jungle Grails</div>
       <nav>
-        <a href="index.html">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="events.html">Events</a>
         <a href="database.html">Database</a>
         <a href="submit.html">Submit</a>
@@ -31,25 +34,25 @@
   <section class="hero container">
     <div class="hero-copy">
       <p class="eyebrow">Cincinnati-based vendor</p>
-      <h1>Enter the Jungle. Find Your Grail.</h1>
+      <h1 class="page-title">Enter the Jungle. Find Your Grail.</h1>
       <p class="hero-text">
         Nostalgia-driven Pokémon, sports, and collectible cards for modern collectors.
       </p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="database.html">Browse Local Shows</a>
-        <a class="btn btn-secondary" href="events.html">View Upcoming Events</a>
+        <a class="btn btn-primary" href="database.html">🌿 Browse Local Shows</a>
+        <a class="btn btn-secondary" href="events.html">🎟 View Upcoming Events</a>
       </div>
     </div>
   </section>
 
   <section class="ticker-wrap">
     <div class="ticker" id="showTicker">
-      <span>Upcoming shows loading...</span>
+      <span>Loading upcoming shows...</span>
     </div>
   </section>
 
   <section class="container section">
-    <h2>What You'll Find in the Jungle</h2>
+    <h2 class="section-title">🎴 What You'll Find in the Jungle</h2>
     <div class="card-grid three">
       <article class="card">
         <h3>Pokémon Cards</h3>
@@ -68,15 +71,40 @@
 
   <section class="container section">
     <div class="section-head">
-      <h2>Recent Grails</h2>
+      <h2 class="section-title">🏆 Recent Grails</h2>
       <a href="submit.html" class="text-link">Submit a show or correction</a>
     </div>
-    <div class="card-grid four" id="grailsGrid">
+
+    <div class="card-grid four">
       <article class="card image-card">
-        <img src="images/grail-1.jpg" alt="Recent grail" />
+        <img src="images/grail1.jpg" alt="Recent grail 1" />
         <div class="pad">
           <h3>Vintage Pokémon Grail</h3>
-          <p>Feature sold cards, pickup highlights, or convention floor finds.</p>
+          <p>A spotlight spot for favorite pickups, sales, or booth highlights.</p>
+        </div>
+      </article>
+
+      <article class="card image-card">
+        <img src="images/grail2.jpg" alt="Recent grail 2" />
+        <div class="pad">
+          <h3>Sports Card Hit</h3>
+          <p>Showcase a standout rookie, slab, or collector favorite.</p>
+        </div>
+      </article>
+
+      <article class="card image-card">
+        <img src="images/grail3.jpg" alt="Recent grail 3" />
+        <div class="pad">
+          <h3>Convention Floor Find</h3>
+          <p>Perfect for booth finds and memorable event pickups.</p>
+        </div>
+      </article>
+
+      <article class="card image-card">
+        <img src="images/booth.jpg" alt="Jungle Grails booth" />
+        <div class="pad">
+          <h3>Booth Energy</h3>
+          <p>Use this for a photo that captures your show-day vibe.</p>
         </div>
       </article>
     </div>
@@ -84,8 +112,10 @@
 
   <section class="container section">
     <div class="cta-panel">
-      <h2>Explore the Midwest Card Show Scene</h2>
-      <p>Search local card shows, browse future dates, and help improve the database.</p>
+      <h2 class="section-title">🗺 Explore the Midwest Card Show Scene</h2>
+      <p class="page-intro">
+        Browse local card shows, plan your next hobby road trip, and help improve the database for the collector community.
+      </p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="database.html">Open the Database</a>
         <a class="btn btn-secondary" href="submit.html">Submit an Event</a>
@@ -99,7 +129,7 @@
         <strong>Jungle Grails</strong>
         <p>Enter the Jungle. Find Your Grail.</p>
       </div>
-      <div>
+      <div class="footer-links">
         <a href="#">Instagram</a>
         <a href="#">YouTube</a>
         <a href="#">X</a>
@@ -108,6 +138,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

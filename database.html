@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Card Show Database | Jungle Grails</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">Jungle Grails</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="database.html">Database</a>
+        <a href="submit.html">Submit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <h1 style="font-size:3.5rem;">Local Card Show Database</h1>
+    <p class="hero-text">Browse regional card shows and help improve the list.</p>
+
+    <div class="card" style="margin-bottom:18px;">
+      <div class="form-grid">
+        <input id="searchInput" type="text" placeholder="Search by show name, city, state, promoter..." />
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="eventsTable">
+        <thead>
+          <tr>
+            <th>Show Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Next Show</th>
+            <th>Promoter</th>
+            <th>Tables</th>
+            <th>Map</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sample Card Show</td>
+            <td>Cincinnati</td>
+            <td>OH</td>
+            <td>2026-04-12</td>
+            <td>Sample Promoter</td>
+            <td>75</td>
+            <td><a href="#">Map</a></td>
+            <td><a href="#">Source</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const table = document.getElementById("eventsTable");
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.toLowerCase();
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? "" : "none";
+      });
+    });
+  </script>
+</body>
+</html>

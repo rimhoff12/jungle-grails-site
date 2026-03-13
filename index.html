@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jungle Grails</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-jungle">
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">Jungle Grails</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="database.html">Database</a>
+        <a href="submit.html">Submit</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="eyebrow">Cincinnati-based vendor</p>
+      <h1>Enter the Jungle. Find Your Grail.</h1>
+      <p class="hero-text">
+        Nostalgia-driven Pokémon, sports, and collectible cards for modern collectors.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="database.html">Browse Local Shows</a>
+        <a class="btn btn-secondary" href="events.html">View Upcoming Events</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ticker-wrap">
+    <div class="ticker" id="showTicker">
+      <span>Upcoming shows loading...</span>
+    </div>
+  </section>
+
+  <section class="container section">
+    <h2>What You'll Find in the Jungle</h2>
+    <div class="card-grid three">
+      <article class="card">
+        <h3>Pokémon Cards</h3>
+        <p>Vintage, modern, sealed, singles, and nostalgic collector favorites.</p>
+      </article>
+      <article class="card">
+        <h3>Sports Cards</h3>
+        <p>Rookies, stars, parallels, slabs, and collector-focused inventory.</p>
+      </article>
+      <article class="card">
+        <h3>Collectibles</h3>
+        <p>Show-floor finds and hobby items that fit the grail-chasing spirit.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="section-head">
+      <h2>Recent Grails</h2>
+      <a href="submit.html" class="text-link">Submit a show or correction</a>
+    </div>
+    <div class="card-grid four" id="grailsGrid">
+      <article class="card image-card">
+        <img src="images/grail-1.jpg" alt="Recent grail" />
+        <div class="pad">
+          <h3>Vintage Pokémon Grail</h3>
+          <p>Feature sold cards, pickup highlights, or convention floor finds.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="cta-panel">
+      <h2>Explore the Midwest Card Show Scene</h2>
+      <p>Search local card shows, browse future dates, and help improve the database.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="database.html">Open the Database</a>
+        <a class="btn btn-secondary" href="submit.html">Submit an Event</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Jungle Grails</strong>
+        <p>Enter the Jungle. Find Your Grail.</p>
+      </div>
+      <div>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">X</a>
+        <a href="#">eBay</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,3 +1,32 @@
+function loadPartial(id, file, callback) {
+  fetch(file)
+    .then(response => response.text())
+    .then(html => {
+      const target = document.getElementById(id);
+      if (target) {
+        target.innerHTML = html;
+        if (callback) callback();
+      }
+    })
+    .catch(error => {
+      console.error(`Error loading ${file}:`, error);
+    });
+}
+
+function setActiveNavLink() {
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+  document.querySelectorAll("nav a").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPage) {
+      link.classList.add("active");
+    }
+  });
+}
+
+loadPartial("header", "header.html", setActiveNavLink);
+loadPartial("footer", "footer.html");
+
 const ticker = document.getElementById("showTicker");
 
 const sampleShows = [

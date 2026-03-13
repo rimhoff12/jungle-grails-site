@@ -1,31 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Submit Event | Jungle Grails</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit an Event | Jungle Grails</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <div class="bg-jungle">
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+  </div>
 
-<header>
-  <h1>Jungle Grails</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="events.html">Events</a>
-    <a href="database.html">Database</a>
-    <a href="submit.html">Submit</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="container nav">
+      <div class="logo">Jungle Grails</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="database.html">Database</a>
+        <a href="submit.html">Submit</a>
+      </nav>
+    </div>
+  </header>
 
-<h2>Submit a Card Show or Correction</h2>
+  <main class="container section">
+    <p class="eyebrow">Help improve the database</p>
+    <h1 style="font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 16px;">Submit an Event or Correction</h1>
+    <p class="hero-text">
+      Found a missing show or spotted incorrect details? Send an update for review.
+    </p>
 
-<p>
-Help improve the Midwest card show database by submitting new events or corrections.
-</p>
+    <section class="section">
+      <div class="card">
+        <form class="form-grid">
+          <div>
+            <label for="submissionType">Submission Type</label>
+            <select id="submissionType" name="submissionType">
+              <option>New Event</option>
+              <option>Correction</option>
+            </select>
+          </div>
 
-<p>
-Submission form coming soon.
-</p>
+          <div>
+            <label for="showName">Show Name</label>
+            <input id="showName" name="showName" type="text" placeholder="Enter show name" />
+          </div>
 
+          <div>
+            <label for="details">Details</label>
+            <textarea id="details" name="details" rows="6" placeholder="Enter the event details or correction"></textarea>
+          </div>
+
+          <div>
+            <label for="sourceUrl">Source URL</label>
+            <input id="sourceUrl" name="sourceUrl" type="text" placeholder="Paste source link if available" />
+          </div>
+
+          <div>
+            <label for="submitterName">Your Name</label>
+            <input id="submitterName" name="submitterName" type="text" placeholder="Your name" />
+          </div>
+
+          <div>
+            <label for="submitterEmail">Your Email</label>
+            <input id="submitterEmail" name="submitterEmail" type="email" placeholder="your@email.com" />
+          </div>
+
+          <div>
+            <button class="btn btn-primary" type="submit">Submit for Review</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-panel">
+        <h2>Manual Review First</h2>
+        <p>
+          Every submission should be reviewed by you before it is added to the live database.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Jungle Grails</strong>
+        <p>Enter the Jungle. Find Your Grail.</p>
+      </div>
+      <div>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">X</a>
+        <a href="#">eBay</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

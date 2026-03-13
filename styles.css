@@ -175,6 +175,36 @@ nav a.active {
   flex-wrap: wrap;
 }
 
+.section-vine {
+  position: relative;
+  padding-top: 68px;
+}
+
+.section-vine::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, 75%);
+  height: 22px;
+  background:
+    radial-gradient(circle at 12px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 52px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 92px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 132px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 172px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 212px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 252px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 292px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 332px 11px, var(--gold) 0 4px, transparent 5px),
+    radial-gradient(circle at 372px 11px, var(--gold) 0 4px, transparent 5px),
+    linear-gradient(90deg, transparent 0%, var(--green) 10%, var(--green-dark) 50%, var(--green) 90%, transparent 100%);
+  border-radius: 999px;
+  opacity: 0.9;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.14);
+}
+
 .text-link {
   color: var(--gold);
   font-weight: 800;

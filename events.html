@@ -7,10 +7,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -28,42 +27,26 @@
     <p class="eyebrow">Where to find Jungle Grails</p>
     <h1 class="page-title">Upcoming Shows</h1>
     <p class="page-intro">
-      Follow Jungle Grails at upcoming card shows, conventions, and collector events across the region.
+      Find Jungle Grails at upcoming card shows and conventions across Southwestern Ohio and nearby areas.
     </p>
 
     <section class="section">
-      <div class="card-grid three">
+      <div class="card-grid three" id="attendingEventsGrid">
         <article class="card">
-          <h3>Cincinnati Card Show</h3>
-          <p><strong>Date:</strong> Placeholder</p>
-          <p><strong>Location:</strong> Cincinnati, OH</p>
-          <p><strong>Notes:</strong> Confirmed appearance placeholder.</p>
-        </article>
-
-        <article class="card">
-          <h3>Queen City Collectibles Expo</h3>
-          <p><strong>Date:</strong> Placeholder</p>
-          <p><strong>Location:</strong> Mason, OH</p>
-          <p><strong>Notes:</strong> Tentative event placeholder.</p>
-        </article>
-
-        <article class="card">
-          <h3>Midwest Card Convention</h3>
-          <p><strong>Date:</strong> Placeholder</p>
-          <p><strong>Location:</strong> Placeholder</p>
-          <p><strong>Notes:</strong> Add your next scheduled show here.</p>
+          <h3>Loading upcoming appearances...</h3>
+          <p>Please wait while the schedule loads.</p>
         </article>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-vine">
       <div class="cta-panel">
-        <h2 class="section-title">🎟 Check Back for New Show Dates</h2>
+        <h2 class="section-title">🎟 See You at the Next Show</h2>
         <p class="page-intro">
-          This page will become your live event schedule as you add confirmed appearances.
+          This page updates from the Jungle Grails event database and only highlights shows where Jungle Grails is planning to attend.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="database.html">Browse Local Database</a>
+          <a class="btn btn-primary" href="database.html">Browse Full Show Database</a>
           <a class="btn btn-secondary" href="submit.html">Submit a Show</a>
         </div>
       </div>
@@ -72,6 +55,55 @@
 
   <div id="footer"></div>
 
-  <script src="script.js?v=3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="script.js?v=6"></script>
+  <script>
+    const grid = document.getElementById("attendingEventsGrid");
+
+    function renderAttendingEvents(events) {
+      const attended = getAttendingEvents(events);
+
+      if (!attended.length) {
+        grid.innerHTML = `
+          <article class="card">
+            <h3>No Upcoming Jungle Grails Shows Listed Yet</h3>
+            <p>Check back soon for confirmed upcoming appearances.</p>
+          </article>
+        `;
+        return;
+      }
+
+      grid.innerHTML = attended.map(event => `
+        <article class="card">
+          <h3>${escapeHtml(event.showName)}</h3>
+          <p><strong>Date:</strong> ${formatDateForDisplay(event.showDateRaw)}</p>
+          <p><strong>Location:</strong> ${escapeHtml(event.city)}, ${escapeHtml(event.state)}</p>
+          <p><strong>Promoter:</strong> ${escapeHtml(event.promoter)}</p>
+          <p><strong>Status:</strong> ${escapeHtml(event.jungleStatus || "Confirmed")}</p>
+          ${event.jungleNotes ? `<p><strong>Notes:</strong> ${escapeHtml(event.jungleNotes)}</p>` : ""}
+          <p class="hero-actions" style="margin-top: 14px;">
+            ${event.mapLink ? `<a class="btn btn-primary" href="${escapeHtml(event.mapLink)}" target="_blank" rel="noopener noreferrer">View Map</a>` : ""}
+            ${event.sourceUrl ? `<a class="btn btn-secondary" href="${escapeHtml(event.sourceUrl)}" target="_blank" rel="noopener noreferrer">Event Source</a>` : ""}
+          </p>
+        </article>
+      `).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchEventData()
+        .then(events => {
+          renderAttendingEvents(events);
+        })
+        .catch(error => {
+          console.error("Attending events load error:", error);
+          grid.innerHTML = `
+            <article class="card">
+              <h3>Unable to Load Upcoming Appearances</h3>
+              <p>Please try refreshing the page.</p>
+            </article>
+          `;
+        });
+    });
+  </script>
 </body>
 </html>

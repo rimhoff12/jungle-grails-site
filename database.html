@@ -10,7 +10,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -54,7 +54,7 @@
               <th>Show Name</th>
               <th>City</th>
               <th>State</th>
-              <th>Next Show</th>
+              <th>Show Date</th>
               <th>Promoter</th>
               <th>Tables</th>
               <th>Map</th>
@@ -86,7 +86,7 @@
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
   <script>
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
 
@@ -104,11 +104,96 @@
         .replace(/'/g, "&#039;");
     }
 
+    function parseDateString(dateStr) {
+      if (!dateStr) return null;
+
+      const trimmed = String(dateStr).trim();
+      const match = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if (!match) return null;
+
+      const year = Number(match[1]);
+      const month = Number(match[2]) - 1;
+      const day = Number(match[3]);
+
+      const date = new Date(year, month, day);
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month ||
+        date.getDate() !== day
+      ) {
+        return null;
+      }
+
+      return date;
+    }
+
+    function formatDateForDisplay(dateStr) {
+      const date = parseDateString(dateStr);
+      if (!date) return escapeHtml(dateStr);
+
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    function getTodayStart() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    function expandFutureDates(sheetRows) {
+      const today = getTodayStart();
+      const expanded = [];
+
+      sheetRows.forEach(row => {
+        const status = String(row["Status"] || "").trim().toLowerCase();
+
+        if (status && status !== "live") {
+          return;
+        }
+
+        const futureDatesCell = String(row["Future Show Dates"] || "").trim();
+        if (!futureDatesCell) {
+          return;
+        }
+
+        const splitDates = futureDatesCell
+          .split(";")
+          .map(date => date.trim())
+          .filter(Boolean);
+
+        splitDates.forEach(dateStr => {
+          const parsedDate = parseDateString(dateStr);
+          if (!parsedDate) return;
+
+          if (parsedDate < today) return;
+
+          expanded.push({
+            showName: row["Show Name"] || "",
+            city: row["City"] || "",
+            state: row["State"] || "",
+            showDateRaw: dateStr,
+            showDateObj: parsedDate,
+            promoter: row["Promoter / Host"] || "",
+            tables: row["Size (# Tables)"] || "",
+            mapLink: row["Map Link"] || "",
+            sourceUrl: row["Source URL"] || ""
+          });
+        });
+      });
+
+      expanded.sort((a, b) => a.showDateObj - b.showDateObj);
+
+      return expanded;
+    }
+
     function renderRows(rows) {
       if (!rows.length) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8">No matching events found.</td>
+            <td colspan="8">No upcoming events found.</td>
           </tr>
         `;
         return;
@@ -116,20 +201,20 @@
 
       tbody.innerHTML = rows.map(row => `
         <tr>
-          <td>${escapeHtml(row["Show Name"])}</td>
-          <td>${escapeHtml(row["City"])}</td>
-          <td>${escapeHtml(row["State"])}</td>
-          <td>${escapeHtml(row["Date of Next Show"])}</td>
-          <td>${escapeHtml(row["Promoter / Host"])}</td>
-          <td>${escapeHtml(row["Size (# Tables)"])}</td>
+          <td>${escapeHtml(row.showName)}</td>
+          <td>${escapeHtml(row.city)}</td>
+          <td>${escapeHtml(row.state)}</td>
+          <td>${formatDateForDisplay(row.showDateRaw)}</td>
+          <td>${escapeHtml(row.promoter)}</td>
+          <td>${escapeHtml(row.tables)}</td>
           <td>
-            ${row["Map Link"]
-              ? `<a href="${escapeHtml(row["Map Link"])}" target="_blank" rel="noopener noreferrer">Map</a>`
+            ${row.mapLink
+              ? `<a href="${escapeHtml(row.mapLink)}" target="_blank" rel="noopener noreferrer">Map</a>`
               : ""}
           </td>
           <td>
-            ${row["Source URL"]
-              ? `<a href="${escapeHtml(row["Source URL"])}" target="_blank" rel="noopener noreferrer">Source</a>`
+            ${row.sourceUrl
+              ? `<a href="${escapeHtml(row.sourceUrl)}" target="_blank" rel="noopener noreferrer">Source</a>`
               : ""}
           </td>
         </tr>
@@ -145,7 +230,14 @@
       }
 
       const filtered = allRows.filter(row =>
-        Object.values(row).join(" ").toLowerCase().includes(q)
+        [
+          row.showName,
+          row.city,
+          row.state,
+          row.showDateRaw,
+          row.promoter,
+          row.tables
+        ].join(" ").toLowerCase().includes(q)
       );
 
       renderRows(filtered);
@@ -156,11 +248,7 @@
       header: true,
       skipEmptyLines: true,
       complete: function(results) {
-        allRows = results.data.filter(row =>
-          row["Show Name"] &&
-          (!row["Status"] || row["Status"].toLowerCase() === "live")
-        );
-
+        allRows = expandFutureDates(results.data);
         renderRows(allRows);
       },
       error: function(error) {

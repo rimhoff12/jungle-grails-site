@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Local Card Show Database | Jungle Grails</title>
+  <title>Southwestern Ohio Card Show Database | Jungle Grails</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -25,10 +25,10 @@
   <div id="header"></div>
 
   <main class="container section">
-    <p class="eyebrow">Regional hobby resource</p>
-    <h1 class="page-title">Local Card Show Database</h1>
+    <p class="eyebrow">Local hobby resource</p>
+    <h1 class="page-title">Southwestern Ohio Card Show Database</h1>
     <p class="page-intro">
-      Browse regional card shows and help improve the list for collectors and vendors.
+      Browse card shows across Southwestern Ohio and nearby areas, and help improve the list for local collectors and vendors.
     </p>
 
     <section class="section">
@@ -36,7 +36,11 @@
         <div class="form-grid">
           <div>
             <label for="searchInput">Search</label>
-            <input id="searchInput" type="text" placeholder="Search by show name, city, state, promoter..." />
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Search by show name, city, state, promoter..."
+            />
           </div>
         </div>
       </div>
@@ -59,41 +63,14 @@
           </thead>
           <tbody>
             <tr>
-              <td>Sample Card Show</td>
-              <td>Cincinnati</td>
-              <td>OH</td>
-              <td>2026-04-12</td>
-              <td>Sample Promoter</td>
-              <td>75</td>
-              <td><a href="#">Map</a></td>
-              <td><a href="#">Source</a></td>
-            </tr>
-            <tr>
-              <td>Queen City Collectibles Expo</td>
-              <td>Mason</td>
-              <td>OH</td>
-              <td>2026-04-20</td>
-              <td>Example Promotions</td>
-              <td>90</td>
-              <td><a href="#">Map</a></td>
-              <td><a href="#">Source</a></td>
-            </tr>
-            <tr>
-              <td>Dayton Sports Card Show</td>
-              <td>Dayton</td>
-              <td>OH</td>
-              <td>2026-05-04</td>
-              <td>Midwest Shows LLC</td>
-              <td>60</td>
-              <td><a href="#">Map</a></td>
-              <td><a href="#">Source</a></td>
+              <td colspan="8">Loading event data...</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-vine">
       <div class="cta-panel">
         <h2 class="section-title">📝 Help Improve the List</h2>
         <p class="page-intro">
@@ -108,18 +85,96 @@
 
   <div id="footer"></div>
 
-  <script src="script.js?v=3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="script.js?v=4"></script>
   <script>
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
+
     const searchInput = document.getElementById("searchInput");
-    const table = document.getElementById("eventsTable");
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const tbody = document.querySelector("#eventsTable tbody");
+
+    let allRows = [];
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderRows(rows) {
+      if (!rows.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8">No matching events found.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = rows.map(row => `
+        <tr>
+          <td>${escapeHtml(row["Show Name"])}</td>
+          <td>${escapeHtml(row["Location City"])}</td>
+          <td>${escapeHtml(row["Location State"])}</td>
+          <td>${escapeHtml(row["Date of Next Show"])}</td>
+          <td>${escapeHtml(row["Promoter / Host"])}</td>
+          <td>${escapeHtml(row["Size (# Tables)"])}</td>
+          <td>
+            ${row["Map Link"]
+              ? `<a href="${escapeHtml(row["Map Link"])}" target="_blank" rel="noopener noreferrer">Map</a>`
+              : ""}
+          </td>
+          <td>
+            ${row["Source URL"]
+              ? `<a href="${escapeHtml(row["Source URL"])}" target="_blank" rel="noopener noreferrer">Source</a>`
+              : ""}
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function filterRows(query) {
+      const q = query.trim().toLowerCase();
+
+      if (!q) {
+        renderRows(allRows);
+        return;
+      }
+
+      const filtered = allRows.filter(row =>
+        Object.values(row).join(" ").toLowerCase().includes(q)
+      );
+
+      renderRows(filtered);
+    }
+
+    Papa.parse(csvUrl, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        allRows = results.data.filter(row =>
+          row["Show Name"] &&
+          (!row["Status"] || row["Status"].toLowerCase() === "live")
+        );
+
+        renderRows(allRows);
+      },
+      error: function(error) {
+        console.error("CSV load error:", error);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8">Unable to load event data right now.</td>
+          </tr>
+        `;
+      }
+    });
 
     searchInput.addEventListener("input", () => {
-      const q = searchInput.value.toLowerCase();
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(q) ? "" : "none";
-      });
+      filterRows(searchInput.value);
     });
   </script>
 </body>

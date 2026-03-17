@@ -7,10 +7,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -33,44 +32,218 @@
 
     <section class="section">
       <div class="card">
-        <form class="form-grid">
+        <form
+          class="form-grid"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSd8kDWSoXitw093zrwXRN7RYqdxzYETx645lDyaBx5vRUInUw/formResponse"
+          method="POST"
+          target="hidden_iframe"
+          id="eventSubmissionForm"
+        >
           <div>
             <label for="submissionType">Submission Type</label>
-            <select id="submissionType" name="submissionType">
-              <option>New Event</option>
-              <option>Correction</option>
+            <select id="submissionType" name="entry.1538661300" required>
+              <option value="">Select one</option>
+              <option value="New Card Show Event">New Card Show Event</option>
+              <option value="Correction">Correction</option>
             </select>
           </div>
 
           <div>
-            <label for="showName">Show Name</label>
-            <input id="showName" name="showName" type="text" placeholder="Enter show name" />
-          </div>
-
-          <div>
-            <label for="details">Details</label>
-            <textarea id="details" name="details" placeholder="Enter the event details or correction"></textarea>
-          </div>
-
-          <div>
-            <label for="sourceUrl">Source URL</label>
-            <input id="sourceUrl" name="sourceUrl" type="text" placeholder="Paste source link if available" />
-          </div>
-
-          <div>
             <label for="submitterName">Your Name</label>
-            <input id="submitterName" name="submitterName" type="text" placeholder="Your name" />
+            <input
+              id="submitterName"
+              name="entry.998865803"
+              type="text"
+              placeholder="Your name"
+            />
           </div>
 
           <div>
             <label for="submitterEmail">Your Email</label>
-            <input id="submitterEmail" name="submitterEmail" type="email" placeholder="your@email.com" />
+            <input
+              id="submitterEmail"
+              name="entry.701151695"
+              type="email"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <div>
+            <label for="showName">Show Name</label>
+            <input
+              id="showName"
+              name="entry.641537589"
+              type="text"
+              placeholder="Enter show name"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="promoter">Promoter / Host</label>
+            <input
+              id="promoter"
+              name="entry.1639836077"
+              type="text"
+              placeholder="Promoter or host"
+            />
+          </div>
+
+          <div>
+            <label for="city">Location City</label>
+            <input
+              id="city"
+              name="entry.301543914"
+              type="text"
+              placeholder="City"
+            />
+          </div>
+
+          <div>
+            <label for="state">Location State</label>
+            <select id="state" name="entry.38384220">
+              <option value="">Select state</option>
+              <option value="Ohio (OH)">Ohio (OH)</option>
+              <option value="Kentucky (KY)">Kentucky (KY)</option>
+              <option value="Indiana (IN)">Indiana (IN)</option>
+              <option value="Michigan (MI)">Michigan (MI)</option>
+              <option value="Pennsylvania (PA)">Pennsylvania (PA)</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="address">Location / Address</label>
+            <input
+              id="address"
+              name="entry.1216000102"
+              type="text"
+              placeholder="Venue name and address"
+            />
+          </div>
+
+          <div>
+            <label for="showHours">Show Hours</label>
+            <input
+              id="showHours"
+              name="entry.760356172"
+              type="text"
+              placeholder="Example: 10am - 4pm"
+            />
+          </div>
+
+          <div>
+            <label for="tables">Size (# Tables)</label>
+            <input
+              id="tables"
+              name="entry.1672315826"
+              type="text"
+              placeholder="Example: 75"
+            />
+          </div>
+
+          <div>
+            <label for="attendanceTier">Estimated Attendance Tier</label>
+            <select id="attendanceTier" name="entry.610835528">
+              <option value="">Select attendance tier</option>
+              <option value="Small (<300 attendees)">Small (&lt;300 attendees)</option>
+              <option value="Medium (300-1000 attendees)">Medium (300-1000 attendees)</option>
+              <option value="Large (1000+ attendees)">Large (1000+ attendees)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="nextShowDate">Date of Next Show</label>
+            <input
+              id="nextShowDate"
+              name="entry.1144153116"
+              type="date"
+            />
+          </div>
+
+          <div>
+            <label for="futureDates">Future Show Dates</label>
+            <input
+              id="futureDates"
+              name="entry.1851344502"
+              type="text"
+              placeholder="Example: 2026-04-04; 2026-05-02; 2026-06-06"
+            />
+          </div>
+
+          <div>
+            <label for="frequency">Show Frequency</label>
+            <select id="frequency" name="entry.1812972880">
+              <option value="">Select frequency</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Biweekly">Biweekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Annual">Annual</option>
+              <option value="One-Time">One-Time</option>
+              <option value="Unknown">Unknown</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="tableCost">Table Size &amp; Cost</label>
+            <input
+              id="tableCost"
+              name="entry.41732680"
+              type="text"
+              placeholder="Example: 8ft table - $60"
+            />
+          </div>
+
+          <div>
+            <label for="vendorContact">Vendor Signup Contact</label>
+            <input
+              id="vendorContact"
+              name="entry.1295729922"
+              type="text"
+              placeholder="Email, phone, website, or social"
+            />
+          </div>
+
+          <div>
+            <label for="vendorSetup">Vendor Setup Time</label>
+            <input
+              id="vendorSetup"
+              name="entry.999170992"
+              type="text"
+              placeholder="Example: 8am - 9:30am"
+            />
+          </div>
+
+          <div>
+            <label for="sourceUrl">Source URL</label>
+            <input
+              id="sourceUrl"
+              name="entry.2044604827"
+              type="url"
+              placeholder="Paste source link if available"
+            />
+          </div>
+
+          <div>
+            <label for="notes">Notes</label>
+            <textarea
+              id="notes"
+              name="entry.1808450463"
+              placeholder="Any additional context, corrections, or notes"
+            ></textarea>
           </div>
 
           <div>
             <button class="btn btn-primary" type="submit">Submit for Review</button>
           </div>
         </form>
+
+        <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+        <div id="formSuccessMessage" style="display:none; margin-top: 18px;">
+          <p><strong>Thanks!</strong> Your submission was sent for review.</p>
+        </div>
       </div>
     </section>
 
@@ -86,6 +259,17 @@
 
   <div id="footer"></div>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=8"></script>
+  <script>
+    const form = document.getElementById("eventSubmissionForm");
+    const successMessage = document.getElementById("formSuccessMessage");
+
+    form.addEventListener("submit", function() {
+      setTimeout(() => {
+        form.style.display = "none";
+        successMessage.style.display = "block";
+      }, 1200);
+    });
+  </script>
 </body>
 </html>

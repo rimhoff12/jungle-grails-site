@@ -61,7 +61,7 @@
     const grid = document.getElementById("attendingEventsGrid");
 
     function renderAttendingEvents(events) {
-      const attended = getAttendingEvents(events);
+      const attended = getAttendingEvents(events).slice(0, 6);
 
       if (!attended.length) {
         grid.innerHTML = `

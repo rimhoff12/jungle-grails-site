@@ -87,7 +87,7 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="script.js?v=7"></script>
   <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
+    const databaseCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
 
     const searchInput = document.getElementById("searchInput");
     const tbody = document.querySelector("#eventsTable tbody");
@@ -240,7 +240,7 @@
       renderRows(filtered);
     }
 
-    Papa.parse(csvUrl, {
+    Papa.parse(databaseCsvUrl, {
       download: true,
       header: true,
       skipEmptyLines: true,

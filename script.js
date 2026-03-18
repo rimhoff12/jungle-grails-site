@@ -109,8 +109,8 @@ function expandFutureDates(sheetRows) {
 
       expanded.push({
         showName: row["Show Name"] || "",
-        city: row["Location City"] || "",
-        state: row["Location State"] || "",
+        city: row["City"] || "",
+        state: row["State"] || "",
         address: row["Location / Address"] || "",
         showDateRaw: dateStr,
         showDateObj: parsedDate,

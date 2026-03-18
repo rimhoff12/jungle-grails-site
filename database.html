@@ -7,10 +7,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -86,7 +85,7 @@
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=7"></script>
   <script>
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
 
@@ -167,7 +166,6 @@
         splitDates.forEach(dateStr => {
           const parsedDate = parseDateString(dateStr);
           if (!parsedDate) return;
-
           if (parsedDate < today) return;
 
           expanded.push({
@@ -185,7 +183,6 @@
       });
 
       expanded.sort((a, b) => a.showDateObj - b.showDateObj);
-
       return expanded;
     }
 
@@ -248,7 +245,7 @@
       header: true,
       skipEmptyLines: true,
       complete: function(results) {
-        allRows = expandFutureDates(results.data);
+        allRows = expandFutureDates(results.data || []);
         renderRows(allRows);
       },
       error: function(error) {

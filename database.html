@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -41,12 +41,22 @@
               placeholder="Search by show name, city, state, promoter..."
             />
           </div>
+
+          <div class="toggle-row">
+            <label class="toggle-wrap" for="vendorToggle">
+              <input type="checkbox" id="vendorToggle" />
+              Show Vendor Info
+            </label>
+            <span class="helper-text">
+              Reveal vendor-related table details like pricing, signup contact, and setup info.
+            </span>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="table-wrap">
+      <div class="table-wrap" id="databaseTableWrap">
         <table id="eventsTable">
           <thead>
             <tr>
@@ -58,11 +68,15 @@
               <th>Tables</th>
               <th>Map</th>
               <th>Source</th>
+              <th class="vendor-column">Table Cost</th>
+              <th class="vendor-column">Vendor Signup</th>
+              <th class="vendor-column">Vendor Setup</th>
+              <th class="vendor-column">Dealer Tier</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colspan="8">Loading event data...</td>
+              <td colspan="12">Loading event data...</td>
             </tr>
           </tbody>
         </table>
@@ -85,112 +99,20 @@
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=9"></script>
   <script>
-    const databaseCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTozUI-utKd6SRMDi58wQ3SuY5wodkmPIx5MaxZj2VeP_7tv6rmflzqWxoBk-7wdZfjE6w5MAMu8WPL/pub?gid=0&single=true&output=csv";
-
     const searchInput = document.getElementById("searchInput");
+    const vendorToggle = document.getElementById("vendorToggle");
+    const tableWrap = document.getElementById("databaseTableWrap");
     const tbody = document.querySelector("#eventsTable tbody");
 
     let allRows = [];
-
-    function escapeHtml(value) {
-      return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function parseDateString(dateStr) {
-      if (!dateStr) return null;
-
-      const trimmed = String(dateStr).trim();
-      const match = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (!match) return null;
-
-      const year = Number(match[1]);
-      const month = Number(match[2]) - 1;
-      const day = Number(match[3]);
-
-      const date = new Date(year, month, day);
-      if (
-        date.getFullYear() !== year ||
-        date.getMonth() !== month ||
-        date.getDate() !== day
-      ) {
-        return null;
-      }
-
-      return date;
-    }
-
-    function formatDateForDisplay(dateStr) {
-      const date = parseDateString(dateStr);
-      if (!date) return escapeHtml(dateStr);
-
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      });
-    }
-
-    function getTodayStart() {
-      const now = new Date();
-      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    }
-
-    function expandFutureDates(sheetRows) {
-      const today = getTodayStart();
-      const expanded = [];
-
-      sheetRows.forEach(row => {
-        const status = String(row["Status"] || "").trim().toLowerCase();
-
-        if (status && status !== "live") {
-          return;
-        }
-
-        const futureDatesCell = String(row["Future Show Dates"] || "").trim();
-        if (!futureDatesCell) {
-          return;
-        }
-
-        const splitDates = futureDatesCell
-          .split(";")
-          .map(date => date.trim())
-          .filter(Boolean);
-
-        splitDates.forEach(dateStr => {
-          const parsedDate = parseDateString(dateStr);
-          if (!parsedDate) return;
-          if (parsedDate < today) return;
-
-          expanded.push({
-            showName: row["Show Name"] || "",
-            city: row["City"] || "",
-            state: row["State"] || "",
-            showDateRaw: dateStr,
-            showDateObj: parsedDate,
-            promoter: row["Promoter / Host"] || "",
-            tables: row["Size (# Tables)"] || "",
-            mapLink: row["Map Link"] || "",
-            sourceUrl: row["Source URL"] || ""
-          });
-        });
-      });
-
-      expanded.sort((a, b) => a.showDateObj - b.showDateObj);
-      return expanded;
-    }
 
     function renderRows(rows) {
       if (!rows.length) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8">No upcoming events found.</td>
+            <td colspan="12">No upcoming events found.</td>
           </tr>
         `;
         return;
@@ -214,6 +136,10 @@
               ? `<a href="${escapeHtml(row.sourceUrl)}" target="_blank" rel="noopener noreferrer">Source</a>`
               : ""}
           </td>
+          <td class="vendor-column">${escapeHtml(row.tableCost)}</td>
+          <td class="vendor-column">${escapeHtml(row.vendorSignup)}</td>
+          <td class="vendor-column">${escapeHtml(row.vendorSetup)}</td>
+          <td class="vendor-column">${escapeHtml(row.dealerTier)}</td>
         </tr>
       `).join("");
     }
@@ -233,33 +159,54 @@
           row.state,
           row.showDateRaw,
           row.promoter,
-          row.tables
+          row.tables,
+          row.tableCost,
+          row.vendorSignup,
+          row.vendorSetup,
+          row.dealerTier
         ].join(" ").toLowerCase().includes(q)
       );
 
       renderRows(filtered);
     }
 
-    Papa.parse(databaseCsvUrl, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function(results) {
-        allRows = expandFutureDates(results.data || []);
-        renderRows(allRows);
-      },
-      error: function(error) {
-        console.error("CSV load error:", error);
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="8">Unable to load event data right now.</td>
-          </tr>
-        `;
+    function applyVendorMode() {
+      if (vendorToggle.checked) {
+        tableWrap.classList.add("vendor-mode");
+      } else {
+        tableWrap.classList.remove("vendor-mode");
       }
-    });
+    }
 
-    searchInput.addEventListener("input", () => {
-      filterRows(searchInput.value);
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchEventData()
+        .then(events => {
+          allRows = events.map(row => ({
+            ...row,
+            tableCost: row.tableCost || "",
+            vendorSignup: row.vendorSignup || "",
+            vendorSetup: row.vendorSetup || "",
+            dealerTier: row.dealerTier || ""
+          }));
+          renderRows(allRows);
+          applyVendorMode();
+        })
+        .catch(error => {
+          console.error("Database load error:", error);
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="12">Unable to load event data right now.</td>
+            </tr>
+          `;
+        });
+
+      searchInput.addEventListener("input", () => {
+        filterRows(searchInput.value);
+      });
+
+      vendorToggle.addEventListener("change", () => {
+        applyVendorMode();
+      });
     });
   </script>
 </body>

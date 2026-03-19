@@ -87,15 +87,10 @@ function expandFutureDates(sheetRows) {
 
   sheetRows.forEach(row => {
     const status = String(row["Status"] || "").trim().toLowerCase();
-
-    if (status && status !== "live") {
-      return;
-    }
+    if (status && status !== "live") return;
 
     const futureDatesCell = String(row["Future Show Dates"] || "").trim();
-    if (!futureDatesCell) {
-      return;
-    }
+    if (!futureDatesCell) return;
 
     const splitDates = futureDatesCell
       .split(";")

@@ -402,9 +402,60 @@ nav a.active {
   box-shadow: var(--shadow-soft);
 }
 
+.table-wrap table {
+  min-width: 900px;
+}
+
+.vendor-mode table {
+  min-width: 1300px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.vendor-column {
+  display: none;
+}
+
+.vendor-mode .vendor-column {
+  display: table-cell;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.toggle-wrap input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  flex: 0 0 auto;
+  padding: 0;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+.helper-text {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 th, td {

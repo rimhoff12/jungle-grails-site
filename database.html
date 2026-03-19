@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Lilita+One&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <div class="bg-jungle">
@@ -51,6 +51,21 @@
               Reveal vendor-related table details like pricing, signup contact, and setup info.
             </span>
           </div>
+
+          <div class="table-controls">
+            <div class="table-meta">
+              <div>
+                <label for="rowsPerPage">Rows per page</label>
+                <select id="rowsPerPage" class="rows-select">
+                  <option value="10">10</option>
+                  <option value="25" selected>25</option>
+                  <option value="50">50</option>
+                  <option value="all">All</option>
+                </select>
+              </div>
+              <span class="scroll-hint">↔ Scroll horizontally for more columns when vendor info is on.</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -81,6 +96,12 @@
           </tbody>
         </table>
       </div>
+
+      <div class="pagination">
+        <button class="btn btn-secondary" id="prevPageBtn" type="button">Previous</button>
+        <span class="pagination-info" id="paginationInfo">Page 1</span>
+        <button class="btn btn-secondary" id="nextPageBtn" type="button">Next</button>
+      </div>
     </section>
 
     <section class="section section-vine">
@@ -99,14 +120,31 @@
   <div id="footer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="script.js?v=9"></script>
+  <script src="script.js?v=10"></script>
   <script>
     const searchInput = document.getElementById("searchInput");
     const vendorToggle = document.getElementById("vendorToggle");
+    const rowsPerPageSelect = document.getElementById("rowsPerPage");
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const paginationInfo = document.getElementById("paginationInfo");
     const tableWrap = document.getElementById("databaseTableWrap");
     const tbody = document.querySelector("#eventsTable tbody");
 
     let allRows = [];
+    let filteredRows = [];
+    let currentPage = 1;
+
+    function getRowsPerPage() {
+      const value = rowsPerPageSelect.value;
+      return value === "all" ? "all" : Number(value);
+    }
+
+    function getTotalPages() {
+      const rowsPerPage = getRowsPerPage();
+      if (rowsPerPage === "all") return 1;
+      return Math.max(1, Math.ceil(filteredRows.length / rowsPerPage));
+    }
 
     function renderRows(rows) {
       if (!rows.length) {
@@ -144,30 +182,67 @@
       `).join("");
     }
 
-    function filterRows(query) {
-      const q = query.trim().toLowerCase();
+    function updatePaginationUI() {
+      const totalPages = getTotalPages();
+      const rowsPerPage = getRowsPerPage();
 
-      if (!q) {
-        renderRows(allRows);
+      if (rowsPerPage === "all") {
+        paginationInfo.textContent = `Showing all ${filteredRows.length} rows`;
+      } else {
+        paginationInfo.textContent = `Page ${currentPage} of ${totalPages} • ${filteredRows.length} results`;
+      }
+
+      prevPageBtn.disabled = currentPage <= 1 || rowsPerPage === "all";
+      nextPageBtn.disabled = currentPage >= totalPages || rowsPerPage === "all";
+    }
+
+    function renderCurrentPage() {
+      const rowsPerPage = getRowsPerPage();
+
+      if (!filteredRows.length) {
+        renderRows([]);
+        updatePaginationUI();
         return;
       }
 
-      const filtered = allRows.filter(row =>
-        [
-          row.showName,
-          row.city,
-          row.state,
-          row.showDateRaw,
-          row.promoter,
-          row.tables,
-          row.tableCost,
-          row.vendorSignup,
-          row.vendorSetup,
-          row.dealerTier
-        ].join(" ").toLowerCase().includes(q)
-      );
+      if (rowsPerPage === "all") {
+        renderRows(filteredRows);
+        updatePaginationUI();
+        return;
+      }
 
-      renderRows(filtered);
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const pageRows = filteredRows.slice(startIndex, endIndex);
+
+      renderRows(pageRows);
+      updatePaginationUI();
+    }
+
+    function applyFilters() {
+      const q = searchInput.value.trim().toLowerCase();
+
+      if (!q) {
+        filteredRows = [...allRows];
+      } else {
+        filteredRows = allRows.filter(row =>
+          [
+            row.showName,
+            row.city,
+            row.state,
+            row.showDateRaw,
+            row.promoter,
+            row.tables,
+            row.tableCost,
+            row.vendorSignup,
+            row.vendorSetup,
+            row.dealerTier
+          ].join(" ").toLowerCase().includes(q)
+        );
+      }
+
+      currentPage = 1;
+      renderCurrentPage();
     }
 
     function applyVendorMode() {
@@ -188,7 +263,9 @@
             vendorSetup: row.vendorSetup || "",
             dealerTier: row.dealerTier || ""
           }));
-          renderRows(allRows);
+
+          filteredRows = [...allRows];
+          renderCurrentPage();
           applyVendorMode();
         })
         .catch(error => {
@@ -201,11 +278,31 @@
         });
 
       searchInput.addEventListener("input", () => {
-        filterRows(searchInput.value);
+        applyFilters();
+      });
+
+      rowsPerPageSelect.addEventListener("change", () => {
+        currentPage = 1;
+        renderCurrentPage();
       });
 
       vendorToggle.addEventListener("change", () => {
         applyVendorMode();
+      });
+
+      prevPageBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage -= 1;
+          renderCurrentPage();
+        }
+      });
+
+      nextPageBtn.addEventListener("click", () => {
+        const totalPages = getTotalPages();
+        if (currentPage < totalPages) {
+          currentPage += 1;
+          renderCurrentPage();
+        }
       });
     });
   </script>

@@ -506,6 +506,17 @@ textarea {
   box-shadow: inset 0 2px 0 rgba(255,255,255,0.04);
 }
 
+select {
+  color: var(--text);
+  background: linear-gradient(180deg, #314454, #243140);
+  appearance: auto;
+}
+
+option {
+  color: #111827;
+  background: #ffffff;
+}
+
 input::placeholder,
 textarea::placeholder {
   color: #d7d3c5;

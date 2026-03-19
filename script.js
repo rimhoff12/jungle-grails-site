@@ -113,6 +113,10 @@ function expandFutureDates(sheetRows) {
         tables: row["Size (# Tables)"] || "",
         mapLink: row["Map Link"] || "",
         sourceUrl: row["Source URL"] || "",
+        tableCost: row["Table Size & Cost"] || "",
+        vendorSignup: row["Vendor Signup Contact"] || "",
+        vendorSetup: row["Vendor Setup Time"] || "",
+        dealerTier: row["Dealer Size Tier"] || "",
         attending: row["Jungle Grails Attending"] || "",
         jungleStatus: row["Jungle Grails Status"] || "",
         jungleNotes: row["Jungle Grails Notes"] || ""

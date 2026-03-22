@@ -672,3 +672,20 @@ textarea:focus {
     height: 200px;
   }
 }
+
+.card-grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.social-grid {
+  margin-top: 18px;
+}
+
+.social-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.social-card p {
+  margin-bottom: 0;
+}

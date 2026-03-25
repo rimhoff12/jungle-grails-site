@@ -689,3 +689,21 @@ textarea:focus {
 .social-card p {
   margin-bottom: 0;
 }
+
+.social-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon-img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(1.2) contrast(1.1);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.social-card:hover .logo-icon-img {
+  transform: scale(1.15) rotate(-3deg);
+}

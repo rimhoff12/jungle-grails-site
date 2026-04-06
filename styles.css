@@ -213,8 +213,9 @@ nav a.active {
 
 .hero-brand-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 330px) minmax(0, 620px);
-  gap: 20px;
+  grid-template-columns: 260px minmax(420px, 620px);
+  justify-content: center;
+  gap: 28px;
   align-items: center;
   padding: 34px 26px;
   border-radius: 34px;

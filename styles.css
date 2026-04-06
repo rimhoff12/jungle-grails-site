@@ -136,14 +136,30 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
 }
 
 .logo {
-  font-size: 1.9rem;
-  color: var(--gold);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.28);
+  display: flex;
+  align-items: center;
   white-space: nowrap;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  filter:
+    drop-shadow(0 2px 6px rgba(0,0,0,0.6))
+    drop-shadow(0 0 8px rgba(255,122,24,0.25));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 4px 10px rgba(0,0,0,0.7))
+    drop-shadow(0 0 12px rgba(255,122,24,0.35));
 }
 
 nav {
@@ -213,9 +229,9 @@ nav a.active {
 
 .hero-brand-grid {
   display: grid;
-  grid-template-columns: 260px minmax(420px, 620px);
+  grid-template-columns: 240px minmax(420px, 560px);
   justify-content: center;
-  gap: 28px;
+  gap: 22px;
   align-items: center;
   padding: 34px 26px;
   border-radius: 34px;
@@ -241,75 +257,8 @@ nav a.active {
 .hero-brand-copy {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.hero-brand-title {
-  margin: 0 0 4px;
-  font-family: "Lilita One", cursive;
-  font-size: clamp(3.2rem, 8vw, 6.3rem);
-  line-height: 0.92;
-  letter-spacing: 0.02em;
-  background: linear-gradient(180deg, #fff7d7 0%, #ffcf8b 50%, #ff7a18 72%, #d95d00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: none;
-}
-
-.hero-sign-wrap {
-  position: relative;
-  display: inline-block;
-  width: min(100%, 440px);
-  margin: 0 0 10px;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.4));
-  animation: floatSign 6s ease-in-out infinite;
-}
-
-.hero-sign-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.hero-sign-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 12%;
-  text-align: center;
-  font-family: "Lilita One", cursive;
-  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #fff3d4;
-  text-shadow:
-    0 2px 0 rgba(0,0,0,0.55),
-    0 4px 6px rgba(0,0,0,0.35);
-  pointer-events: none;
-}
-
-.hero-brand-categories {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   gap: 10px;
-  padding: 6px 0 0;
-  font-family: "Lilita One", cursive;
-  font-size: clamp(1rem, 1.8vw, 1.35rem);
-  color: #f6f0df;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  opacity: 0.92;
-}
-
-.hero-brand-categories span {
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
-}
-
-.hero-dot {
-  color: var(--primary-light);
+  width: 100%;
 }
 
 .hero-banner-img {
@@ -861,11 +810,6 @@ textarea:focus {
   100% { background-position: 0% 50%; }
 }
 
-@keyframes floatSign {
-  0%, 100% { transform: translateY(0px) rotate(-1deg); }
-  50% { transform: translateY(-6px) rotate(0deg); }
-}
-
 @media (max-width: 900px) {
   .nav {
     align-items: flex-start;
@@ -879,12 +823,14 @@ textarea:focus {
 
   .hero-brand-grid {
     grid-template-columns: 1fr;
+    justify-content: center;
     text-align: center;
     padding: 28px 20px;
   }
 
   .hero-brand-art {
     order: 1;
+    justify-content: center;
   }
 
   .hero-brand-copy {
@@ -892,8 +838,9 @@ textarea:focus {
     align-items: center;
   }
 
-  .hero-brand-categories {
-    justify-content: center;
+  .eyebrow,
+  .badge {
+    align-self: center;
   }
 }
 
@@ -902,7 +849,11 @@ textarea:focus {
     padding-top: 66px;
   }
 
-  .hero-actions,
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .section-head,
   .footer-grid,
   .table-controls,

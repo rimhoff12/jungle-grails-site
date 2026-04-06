@@ -311,6 +311,15 @@ nav a.active {
   color: var(--primary-light);
 }
 
+.hero-banner-img {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  display: block;
+  margin: 6px 0 10px;
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,0.45));
+}
+
 .section {
   padding: 42px 0;
 }
